@@ -27,6 +27,10 @@ const testHandler = (req, res) => {
   res.status(200).json({ status: 200, data: "it works" });
 };
 
+//AD POSTS
+
+//get all posts
+
 const getAllAds = (req, res) => {
   console.log("test success");
   const allPosts = db.ref("postedAds");
@@ -42,13 +46,96 @@ const getAllAds = (req, res) => {
   );
 };
 
+// get post by id
+
+const getAdById = async (req, res) => {
+  const id = req.params.postId;
+  console.log("by id running");
+  try {
+    const data = await queryDatabase(`postedAds`);
+    const dataValue = Object.keys(data)
+      .map((item) => data[item])
+      .find((obj) => obj.postId === id);
+    console.log(dataValue);
+    if (dataValue) {
+      console.log(dataValue);
+      res.status(200).json({
+        status: 200,
+        post: dataValue,
+      });
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+// get post by category
+
+const getAdByCategory = async (req, res) => {
+  const category = req.params.category;
+  console.log("by category running");
+  try {
+    const data = await queryDatabase(`postedAds`);
+    const dataValue = Object.keys(data)
+      .map((item) => data[item])
+      .filter((obj) => obj.category === category);
+    console.log(dataValue);
+    if (dataValue) {
+      console.log(dataValue);
+      res.status(200).json({
+        status: 200,
+        post: dataValue,
+      });
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+//get post by poster email
+
+const getByPoster = async (req, res) => {
+  const email = req.params.userEmail;
+  console.log(email);
+  try {
+    const data = await queryDatabase(`postedAds`);
+    console.log("array posts", data);
+    const dataValue = Object.keys(data)
+      .map((item) => data[item])
+      .filter((obj) => obj.userEmail === email);
+    if (dataValue) {
+      res.status(200).json({
+        status: 200,
+        post: dataValue,
+      });
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+//post an ad
+
+const postAd = async (req, res) => {
+  const appPostsRef = db.ref("postedAds");
+  console.log(appPostsRef);
+  appPostsRef.push(req.body).then(() => {
+    res.status(200).json({
+      status: 200,
+      message: "ad successfully posted!",
+    });
+  });
+};
+
+//USERS
+
+//check if exising user/create a new user
+
 const createUser = async (req, res) => {
   const returningUser = await getUser(req.body.email);
   console.log(returningUser);
   if (returningUser) {
-    res
-      .status(200)
-      .json({ status: 200, data: req.body, message: "Welcome to skillShare" });
+    res.status(200).json({ status: 200, data: req.body, message: "Welcome" });
     return;
   } else {
     const appUsersRef = db.ref("appUsers");
@@ -85,21 +172,37 @@ const getUser = async (email) => {
   return dataValue || false;
 };
 
+//get user by email
+const getUserByEmail = async () => {
+  const email = req.params.email;
+  try {
+    const data = await queryDatabase(`appUsers`);
+    const dataValue = Object.keys(data)
+      .map((item) => data[item])
+      .find((obj) => obj.email === email);
+    console.log(dataValue);
+    if (dataValue) {
+      res.status(200).json({
+        status: 200,
+        user: dataValue,
+      });
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 //get user by id
 
 const getUserById = async (req, res) => {};
 
-//post an ad
-
-const postAd = async (req, res) => {
-  const appPostsRef = db.ref("postedAds");
-  console.log(appPostsRef);
-  appPostsRef.push(req.body).then(() => {
-    res.status(200).json({
-      status: 200,
-      message: "ad successfully posted!",
-    });
-  });
+module.exports = {
+  createUser,
+  testHandler,
+  postAd,
+  getAllAds,
+  getAdById,
+  getUserByEmail,
+  getByPoster,
+  getAdByCategory,
 };
-
-module.exports = { createUser, testHandler, postAd, getAllAds };

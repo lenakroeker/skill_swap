@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+import { useHistory } from "react-router-dom";
 
-export const AllPosts = (setReFetch) => {
+export const AllPosts = () => {
+  let history = useHistory();
   const [allPosts, setAllPosts] = useState();
 
   useEffect(() => {
@@ -11,7 +13,7 @@ export const AllPosts = (setReFetch) => {
         const postArr = Object.values(data.data);
         setAllPosts(postArr);
       });
-  }, [setReFetch]);
+  }, []);
 
   return (
     <Wrapper>
@@ -27,10 +29,14 @@ export const AllPosts = (setReFetch) => {
           })
           .map((post) => {
             return (
-              <Postbox key={post.title + Math.random()}>
+              <Postbox
+                key={post.postId}
+                onClick={() => history.push(`/posts/${post.postId}`)}
+              >
                 <p>{post.title}</p>
                 <p>location: {post.location}</p>
                 <p>{post.content}</p>
+                {post.image && <img src={post.image} />}
                 <p>posted by: {post.userId}</p>
                 <p>date: {post.timestamp}</p>
               </Postbox>
@@ -49,6 +55,7 @@ const Postbox = styled.div`
   padding: 10px;
   border-radius: 10px;
   border: 2px solid black;
+  cursor: pointer;
 `;
 
 export default AllPosts;

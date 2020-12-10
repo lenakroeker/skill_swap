@@ -2,6 +2,7 @@ import React, { createContext, useEffect, useState } from "react";
 import withFirebaseAuth from "react-with-firebase-auth";
 import firebase from "firebase/app";
 import "firebase/auth";
+import { useHistory } from "react-router-dom";
 
 export const AppContext = createContext(null);
 
@@ -24,10 +25,12 @@ const providers = {
 const AppProvider = ({ children, signInWithGoogle, signOut, user }) => {
   const [appUser, setAppUser] = useState({});
   const [message, setMessage] = useState("");
+  let history = useHistory();
 
   const handleSignOut = () => {
     signOut();
     setAppUser({});
+    history.push(`/`);
   };
 
   useEffect(() => {

@@ -2,7 +2,15 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const morgan = require("morgan");
 require("dotenv").config();
-const { testHandler, createUser, postAd, getAllAds } = require("./handlers");
+const {
+  testHandler,
+  createUser,
+  postAd,
+  getAllAds,
+  getAdById,
+  getByPoster,
+  getAdByCategory,
+} = require("./handlers");
 
 express()
   .use(function (req, res, next) {
@@ -31,6 +39,18 @@ express()
   //get all ads
 
   .get("/allposts", getAllAds)
+
+  //get ad by id
+
+  .get("/posts/:postId", getAdById)
+
+  //get ad by category
+
+  .get("/posts/bycategory/:category", getAdByCategory)
+
+  //get ad by poster email
+
+  .get("/account/posts/:userEmail", getByPoster)
 
   //create new user
 
