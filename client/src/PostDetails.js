@@ -4,6 +4,7 @@ import styled from "styled-components";
 
 export const PostDetails = () => {
   const [post, setPost] = useState();
+  const [favorited, isFavorited] = useState(false);
   const params = useParams();
   const postId = params.postId;
 
@@ -17,6 +18,19 @@ export const PostDetails = () => {
       });
   }, []);
   console.log(post);
+
+  const likePost = () => {
+    window.alert("post liked!");
+    isFavorited(!favorited);
+    // fetch(`/posted`, {
+    //   method: "post",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    //   body: JSON.stringify(formData),
+    // });
+  };
+
   return (
     <Wrapper>
       {post && (
@@ -25,6 +39,9 @@ export const PostDetails = () => {
           <p>{post.timestamp}</p>
           <p>{post.content}</p>
           <button>reply!</button>
+          <button onClick={likePost}>
+            {favorited ? "unfavorite" : "favorite"}
+          </button>
         </Wrapper>
       )}
     </Wrapper>

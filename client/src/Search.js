@@ -23,6 +23,9 @@ export const SearchPage = () => {
       <Cat exact to="/posts/bycategory/computersandtechnology">
         Computers and Technology
       </Cat>
+      <Cat exact to="/posts/bycategory/other">
+        Other
+      </Cat>
     </Wrapper>
   );
 };

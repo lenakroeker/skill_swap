@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
 import { AppContext } from "./AppContext";
 import { useHistory } from "react-router-dom";
@@ -6,19 +6,8 @@ import style from "./styleConstants";
 
 export const AccountDetails = () => {
   const { appUser } = useContext(AppContext);
-  const [posts, setPosts] = useState();
   let history = useHistory();
 
-  useEffect(() => {
-    fetch(`/account/posts/${appUser.email}`)
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-        setPosts(data.post);
-      });
-  }, [appUser]);
-
-  console.log(posts);
   return (
     <Wrapper>
       {appUser.profilePic ? (
@@ -33,36 +22,12 @@ export const AccountDetails = () => {
       )}
       <UserInfo>{appUser.displayName}</UserInfo>
       <UserInfo>{appUser.email}</UserInfo>
-      <UserInfo>Posts by You:</UserInfo>
-      {posts && posts.length > 0 && (
-        <Wrapper>
-          {Object.values(posts)
-            .sort((a, b) => {
-              if (b.timestamp > a.timestamp) {
-                return 1;
-              } else {
-                return -1;
-              }
-            })
-            .map((post) => {
-              return (
-                <Postbox
-                  key={post.postId}
-                  onClick={() => history.push(`/posts/${post.postId}`)}
-                >
-                  <p>{post.title}</p>
-                  <p>{post.content}</p>
-                  <p>{post.timestamp}</p>
-                </Postbox>
-              );
-            })}
-        </Wrapper>
-      )}
+      <button onClick={() => history.push(`/user/${appUser.email}/posts`)}>
+        My Posts
+      </button>
     </Wrapper>
   );
 };
-
-export default AccountDetails;
 
 const Wrapper = styled.div`
   margin: 0px 10vw 20px 10vw;
@@ -86,7 +51,4 @@ const Placeholder = styled.div`
   margin: 20px auto;
 `;
 
-const Postbox = styled.div`
-  padding: 10px;
-  border: 1px solid black;
-`;
+export default AccountDetails;

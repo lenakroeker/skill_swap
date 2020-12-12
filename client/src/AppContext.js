@@ -4,15 +4,18 @@ import firebase from "firebase/app";
 import "firebase/auth";
 import { useHistory } from "react-router-dom";
 
+import { v4 as uuidv4 } from "uuid";
+
 export const AppContext = createContext(null);
 
 var firebaseConfig = {
-  apiKey: "AIzaSyBtoNxYtxecScRZKFTzgRILaraL8MYunHQ",
-  authDomain: "user-app-f64d5.firebaseapp.com",
-  projectId: "user-app-f64d5",
-  storageBucket: "user-app-f64d5.appspot.com",
-  messagingSenderId: "821405046679",
-  appId: "1:821405046679:web:1ab5d238e8b9e5b28e16d2",
+  apiKey: process.env.REACT_APP_apiKey,
+  authDomain: process.env.REACT_APP_authDomain,
+  databaseURL: process.env.REACT_APP_databaseURL,
+  projectId: process.env.REACT_APP_projectId,
+  storageBucket: process.env.REACT_APP_storageBucket,
+  messagingSenderId: process.env.REACT_APP_messagingSenderId,
+  appId: process.env.REACT_APP_appId,
 };
 
 const firebaseApp = firebase.initializeApp(firebaseConfig);

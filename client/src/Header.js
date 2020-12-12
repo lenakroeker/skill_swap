@@ -37,6 +37,9 @@ export const Header = () => {
                 <DropItem exact to="/">
                   Home
                 </DropItem>
+                <DropItem exact to="/all">
+                  All Posts
+                </DropItem>
                 <DropItem exact to="/search">
                   Search
                 </DropItem>
@@ -63,6 +66,9 @@ export const Header = () => {
                 <DropItem exact to="/search">
                   Search
                 </DropItem>
+                <DropItem exact to="/all">
+                  All Posts
+                </DropItem>
               </DropdownContent>
             )}
           </MenuDrop>
@@ -74,8 +80,8 @@ export const Header = () => {
 
 const Wrapper = styled.div`
   padding: 10px;
-  background-color: ${style.black};
-  color: ${style.white};
+  background-color: transparent;
+  color: ${style.black};
   width: 100vw;
   height: 80px;
   text-align: center;
@@ -85,27 +91,29 @@ const Welcome = styled.div``;
 const MenuDrop = styled.div``;
 
 const DropBtn = styled.button`
-  border: 1px solid white;
-  background: transparent;
+  border: 6px solid ${style.black};
+  background: ${style.black};
   color: ${style.white};
+  border-radius: 16px;
   cursor: pointer;
   margin: 10px;
   font-size: 18px;
   padding: 5px 8px;
   width: 50vw;
   &:hover {
-    background-color: rgb(237, 245, 247, 0.1);
+    background-color: ${style.white};
+    color: ${style.black};
   }
 `;
 
 const DropdownContent = styled.ul`
-  margin-top: 0px;
+  margin-top: -5px;
   position: absolute;
   box-sizing: border-box;
   text-align: center;
   left: 0;
   opacity: 0.9;
-  background: ${style.black};
+  background: transparent;
   width: 100vw;
   padding: 0 10vw;
 `;
@@ -114,31 +122,16 @@ const DropItem = styled(NavLink)`
   display: inline-block;
   box-sizing: border-box;
   text-align: center;
-  width: 80vw;
+  width: 53vw;
   background: ${style.black};
+  border: 6px solid ${style.white};
+  border-radius: 20px;
   color: white;
   padding: 10px 10px;
-  margin: 5px 0;
+  margin: 0.5px 0;
   &:hover {
     background: ${style.black};
   }
 `;
-export default Header;
 
-{
-  /* <label htmlFor="category">Find Posts By Category</label>
-      <select
-        type="dropdown"
-        name="category"
-        onChange={(ev) => history.push(`/posts/bycategory/${ev.target.value}`)}
-      >
-        <option value="" disabled selected>
-          Select
-        </option>
-        <option value="sportsandfitness">Sports & Fitness</option>
-        <option value="foodanddrink">Food & Drink</option>
-        <option value="artandcraft">Art & Craft</option>
-        <option value="homeandgarden">Home & Garden</option>
-        <option value="computersandtechnology">Computers & Technology</option>
-      </select> */
-}
+export default Header;

@@ -10,6 +10,8 @@ const {
   getAdById,
   getByPoster,
   getAdByCategory,
+  deletePost,
+  updatePost,
 } = require("./handlers");
 
 express()
@@ -61,6 +63,18 @@ express()
   //post ad
 
   .post("/posted", postAd)
+
+  //delete ad
+
+  .delete("/posts/:postid/delete", deletePost)
+
+  //update ad
+
+  .put("/posts/:postid/update", updatePost)
+
+  //like post
+
+  // .put("/posts/favorite/:useremail:postId", likePost)
 
   // Node spins up our server and sets it to listen on port 8000.
   .listen(8000, () => console.log(`Listening on port 8000`));

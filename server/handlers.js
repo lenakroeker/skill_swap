@@ -127,6 +127,54 @@ const postAd = async (req, res) => {
   });
 };
 
+const deletePost = async (req, res) => {
+  const id = req.params.postid;
+  console.log("delete backend", id);
+
+  try {
+    const data = await queryDeleteFromDatabase(`postedAds`, id);
+    res.status(200).json({
+      status: 200,
+      message: `post ${id} has been deleted`,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+//update post
+
+const updatePost = async (req, res) => {
+  const id = req.params.postid;
+  console.log("update backend", id);
+  console.log("update req", req.body);
+  try {
+    const data = await queryUpdateInDatabase(`postedAds`, id, req.body);
+    res.status(200).json({
+      status: 200,
+      data: data,
+    });
+  } catch (error) {
+    // console.log(error);
+  }
+};
+
+const likePost = async (req, res) => {
+  const id = req.params.postid;
+  const userEmail = req.params.email;
+  console.log("update backend", id);
+  console.log("update req", req.body);
+  try {
+    const data = await queryUpdateInDatabase(`postedAds`, id, req.body);
+    res.status(200).json({
+      status: 200,
+      data: data,
+    });
+  } catch (error) {
+    // console.log(error);
+  }
+};
+
 //USERS
 
 //check if exising user/create a new user
@@ -135,7 +183,9 @@ const createUser = async (req, res) => {
   const returningUser = await getUser(req.body.email);
   console.log(returningUser);
   if (returningUser) {
-    res.status(200).json({ status: 200, data: req.body, message: "Welcome" });
+    res
+      .status(200)
+      .json({ status: 200, data: req.body, message: "Welcome Back" });
     return;
   } else {
     const appUsersRef = db.ref("appUsers");
@@ -143,25 +193,10 @@ const createUser = async (req, res) => {
       res.status(200).json({
         status: 200,
         data: req.body,
-        message: "Welcome back",
+        message: "Welcome",
       });
     });
   }
-};
-
-const queryDatabase = async (key) => {
-  const ref = db.ref(key);
-  let data;
-  await ref.once(
-    "value",
-    (snapshot) => {
-      data = snapshot.val();
-    },
-    (err) => {
-      console.log(err);
-    }
-  );
-  return data;
 };
 
 const getUser = async (email) => {
@@ -196,6 +231,63 @@ const getUserByEmail = async () => {
 
 const getUserById = async (req, res) => {};
 
+//query database
+
+const queryDatabase = async (key) => {
+  const ref = db.ref(key);
+  let data;
+  await ref.once(
+    "value",
+    (snapshot) => {
+      data = snapshot.val();
+    },
+    (err) => {
+      console.log(err);
+    }
+  );
+  return data;
+};
+
+const queryDeleteFromDatabase = async (key, id) => {
+  const ref = db.ref(key);
+  let data;
+  await ref.once(
+    "value",
+    (snapshot) => {
+      snapshot.forEach((child) => {
+        console.log(child.val());
+        if (child.val().postId == id) {
+          child.ref.remove();
+        }
+      });
+    },
+    (err) => {
+      console.log(err);
+    }
+  );
+  return data;
+};
+
+const queryUpdateInDatabase = async (key, id, newVal) => {
+  const ref = db.ref(key);
+  let data;
+  await ref.once(
+    "value",
+    (snapshot) => {
+      snapshot.forEach((child) => {
+        console.log(child.val(), "child val");
+        if (child.val().postId == id) {
+          child.ref.update(newVal);
+        }
+      });
+    },
+    (err) => {
+      console.log("broke in query");
+    }
+  );
+  return data;
+};
+
 module.exports = {
   createUser,
   testHandler,
@@ -205,4 +297,6 @@ module.exports = {
   getUserByEmail,
   getByPoster,
   getAdByCategory,
+  deletePost,
+  updatePost,
 };

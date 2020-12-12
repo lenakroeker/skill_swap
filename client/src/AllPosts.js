@@ -21,7 +21,7 @@ export const AllPosts = () => {
       {allPosts ? (
         Object.values(allPosts)
           .sort((a, b) => {
-            if (b.timestamp > a.timestamp) {
+            if (b.editedOn > a.editedOn) {
               return 1;
             } else {
               return -1;
@@ -39,6 +39,11 @@ export const AllPosts = () => {
                 {post.image && <img src={post.image} />}
                 <p>posted by: {post.userId}</p>
                 <p>date: {post.timestamp}</p>
+                {post.timestamp !== post.editedOn ? (
+                  <p>edited on: {post.editedOn}</p>
+                ) : (
+                  <div></div>
+                )}
               </Postbox>
             );
           })

@@ -1,5 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
 import moment from "moment";
+import { useHistory } from "react-router-dom";
+
 import { v4 as uuidv4 } from "uuid";
 import { AppContext } from "./AppContext";
 import styled from "styled-components";
@@ -16,9 +18,13 @@ const initialState = {
   userEmail: "",
   img: "",
   postId: uuidv4(),
+  editedOn: time,
+  location: null,
 };
 
 export const PostForm = () => {
+  const history = useHistory();
+
   const [formData, setFormData] = useState(initialState);
   const { appUser } = useContext(AppContext);
 
@@ -46,7 +52,7 @@ export const PostForm = () => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(formData),
-    });
+    }).then(history.push(`/all`));
   };
   return (
     <Form>
@@ -60,6 +66,7 @@ export const PostForm = () => {
       <ContentBox
         type="text"
         name="content"
+        rows="5"
         onChange={(ev) => handleChange(ev.target.value, "content")}
       />
       <label htmlFor="content">Location</label>
@@ -68,14 +75,14 @@ export const PostForm = () => {
         name="location"
         onChange={(ev) => handleChange(ev.target.value, "location")}
       />
+
       <label htmlFor="img">Select image:</label>
-      <Input
-        type="file"
-        id="image"
-        name="image"
-        accept="image/*"
-        onChange={(ev) => handleChange(ev.target.value, "image")}
-      />
+      <input id="imgname" type="text" placeholder="Image Name" />
+      <UploadImg id="myimg" />
+      <label id="upProgress"></label>
+      <button id="select">Select</button>
+      <button id="upload">Upload</button>
+      <button id="retrieve">Retrieve</button>
 
       <label htmlFor="category">Category</label>
       <Select
@@ -88,6 +95,7 @@ export const PostForm = () => {
         <option value="artandcraft">Art & Craft</option>
         <option value="homeandgarden">Home & Garden</option>
         <option value="computersandtechnology">Computers & Technology</option>
+        <option value="other">Other</option>
       </Select>
       <PostBtn onClick={postAd}>Post</PostBtn>
     </Form>
@@ -106,12 +114,17 @@ const Input = styled.input`
   width: 95%;
 `;
 
-const ContentBox = styled.input`
+const ContentBox = styled.textarea`
   display: block;
   border-radius: ${style.radius};
   margin: 10px 5px;
-  height: 60px;
   width: 95%;
+`;
+
+const UploadImg = styled.img`
+  width: 100px;
+  height: 100px;
+  border: 1px solid black;
 `;
 
 const Select = styled.select`
