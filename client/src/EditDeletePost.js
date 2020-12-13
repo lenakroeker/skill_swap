@@ -88,14 +88,7 @@ export const Edit = () => {
             name="location"
             onChange={(ev) => handleChange(ev.target.value, "location")}
           />
-          <label htmlFor="img">Select image:</label>
-          <Input
-            type="file"
-            id="image"
-            name="image"
-            accept="image/*"
-            onChange={(ev) => handleChange(ev.target.value, "image")}
-          />
+          {post.imageURL && <Img src={post.imageURL} />}
 
           <label htmlFor="category">Category</label>
           <Select
@@ -160,4 +153,11 @@ const Button = styled.button`
   height: 30px;
   padding: 5px 15px;
 `;
+
+const Img = styled.img`
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+`;
+
 export default Edit;

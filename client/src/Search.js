@@ -7,6 +7,12 @@ export const SearchPage = () => {
   console.log("search");
   return (
     <Wrapper>
+      <Cat exact to="/posts/type/seeking">
+        Seeking
+      </Cat>
+      <Cat exact to="/posts/type/offering">
+        Offering
+      </Cat>
       <Head>Search by Category:</Head>
       <Cat exact to="/posts/bycategory/artandcraft">
         Art and Craft

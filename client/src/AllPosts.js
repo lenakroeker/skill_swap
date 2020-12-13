@@ -28,6 +28,7 @@ export const AllPosts = () => {
             }
           })
           .map((post) => {
+            console.log(post);
             return (
               <Postbox
                 key={post.postId}
@@ -36,7 +37,7 @@ export const AllPosts = () => {
                 <p>{post.title}</p>
                 <p>location: {post.location}</p>
                 <p>{post.content}</p>
-                {post.image && <img src={post.image} />}
+                {post.imageURL && <Img src={post.imageURL} />}
                 <p>posted by: {post.userId}</p>
                 <p>date: {post.timestamp}</p>
                 {post.timestamp !== post.editedOn ? (
@@ -61,6 +62,12 @@ const Postbox = styled.div`
   border-radius: 10px;
   border: 2px solid black;
   cursor: pointer;
+`;
+
+const Img = styled.img`
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
 `;
 
 export default AllPosts;

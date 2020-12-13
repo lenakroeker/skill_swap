@@ -10,8 +10,14 @@ const {
   getAdById,
   getByPoster,
   getAdByCategory,
+  getAdByType,
   deletePost,
   updatePost,
+  likePost,
+  sendMessage,
+  getFavorites,
+  getMessages,
+  getMessageDetails,
 } = require("./handlers");
 
 express()
@@ -50,9 +56,25 @@ express()
 
   .get("/posts/bycategory/:category", getAdByCategory)
 
+  //get ad by type
+
+  .get("/posts/type/:seeking", getAdByType)
+
   //get ad by poster email
 
   .get("/account/posts/:userEmail", getByPoster)
+
+  //get favorites
+
+  .get("/account/favorites/:userEmail", getFavorites)
+
+  //get messages
+
+  .get("/account/messages/:userEmail", getMessages)
+
+  //get message details
+
+  .get("/account/messages/:userEmail/re/:postId/:messageId", getMessageDetails)
 
   //create new user
 
@@ -74,7 +96,10 @@ express()
 
   //like post
 
-  // .put("/posts/favorite/:useremail:postId", likePost)
+  .put(`/likepost`, likePost)
+
+  //send message
+  .put(`/sendMessage`, sendMessage)
 
   // Node spins up our server and sets it to listen on port 8000.
   .listen(8000, () => console.log(`Listening on port 8000`));

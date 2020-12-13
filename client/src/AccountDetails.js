@@ -22,8 +22,14 @@ export const AccountDetails = () => {
       )}
       <UserInfo>{appUser.displayName}</UserInfo>
       <UserInfo>{appUser.email}</UserInfo>
+      <button onClick={() => history.push(`/user/${appUser.email}/messages`)}>
+        My Messages
+      </button>
       <button onClick={() => history.push(`/user/${appUser.email}/posts`)}>
         My Posts
+      </button>
+      <button onClick={() => history.push(`/user/${appUser.email}/favorites`)}>
+        My favorites
       </button>
     </Wrapper>
   );

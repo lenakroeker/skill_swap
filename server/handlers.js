@@ -92,6 +92,29 @@ const getAdByCategory = async (req, res) => {
   }
 };
 
+//get posts by type
+
+const getAdByType = async (req, res) => {
+  const seeking = req.params.seeking;
+  console.log("by seeking running");
+  try {
+    const data = await queryDatabase(`postedAds`);
+    const dataValue = Object.keys(data)
+      .map((item) => data[item])
+      .filter((obj) => obj.seeking === seeking);
+    console.log(dataValue);
+    if (dataValue) {
+      console.log(dataValue);
+      res.status(200).json({
+        status: 200,
+        post: dataValue,
+      });
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 //get post by poster email
 
 const getByPoster = async (req, res) => {
@@ -103,6 +126,79 @@ const getByPoster = async (req, res) => {
     const dataValue = Object.keys(data)
       .map((item) => data[item])
       .filter((obj) => obj.userEmail === email);
+    if (dataValue) {
+      res.status(200).json({
+        status: 200,
+        post: dataValue,
+      });
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+//get favorites
+
+const getFavorites = async (req, res) => {
+  const email = req.params.userEmail;
+  console.log(email);
+  try {
+    const data = await queryDatabase(`likes`);
+    console.log("likes", data);
+    const dataValue = Object.keys(data)
+      .map((item) => data[item])
+      .filter((obj) => obj.userEmail === email);
+    if (dataValue) {
+      res.status(200).json({
+        status: 200,
+        post: dataValue,
+      });
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+//get messages
+
+const getMessages = async (req, res) => {
+  const email = req.params.userEmail;
+  console.log(email);
+  try {
+    const data = await queryDatabase(`messages`);
+    console.log("messages", data);
+    const dataValue = Object.keys(data)
+      .map((item) => data[item])
+      .filter((obj) => obj.posterEmail === email);
+    if (dataValue) {
+      res.status(200).json({
+        status: 200,
+        post: dataValue,
+      });
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+//get message details
+
+const getMessageDetails = async (req, res) => {
+  const email = req.params.userEmail;
+  const postId = req.params.postId;
+  const messageId = req.params.messageId;
+  console.log(email);
+  try {
+    const data = await queryDatabase(`messages`);
+    console.log("messages", data);
+    const dataValue = Object.keys(data)
+      .map((item) => data[item])
+      .filter(
+        (obj) =>
+          obj.posterEmail === email &&
+          obj.postId === postId &&
+          obj.messageId === messageId
+      );
     if (dataValue) {
       res.status(200).json({
         status: 200,
@@ -160,19 +256,25 @@ const updatePost = async (req, res) => {
 };
 
 const likePost = async (req, res) => {
-  const id = req.params.postid;
-  const userEmail = req.params.email;
-  console.log("update backend", id);
-  console.log("update req", req.body);
-  try {
-    const data = await queryUpdateInDatabase(`postedAds`, id, req.body);
+  const appPostsRef = db.ref("likes");
+  console.log(appPostsRef);
+  appPostsRef.push(req.body).then(() => {
     res.status(200).json({
       status: 200,
-      data: data,
+      message: "ad successfully posted!",
     });
-  } catch (error) {
-    // console.log(error);
-  }
+  });
+};
+
+const sendMessage = async (req, res) => {
+  const appPostsRef = db.ref("messages");
+  console.log(appPostsRef);
+  appPostsRef.push(req.body).then(() => {
+    res.status(200).json({
+      status: 200,
+      message: "message successfully sent!",
+    });
+  });
 };
 
 //USERS
@@ -299,4 +401,10 @@ module.exports = {
   getAdByCategory,
   deletePost,
   updatePost,
+  getAdByType,
+  likePost,
+  sendMessage,
+  getFavorites,
+  getMessages,
+  getMessageDetails,
 };
