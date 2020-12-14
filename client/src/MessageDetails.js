@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import { AppContext } from "./AppContext";
 import { useParams } from "react-router-dom";
 import style from "./styleConstants";
@@ -43,19 +43,34 @@ export const MessageDetails = () => {
   );
 };
 
+const fadeIn = keyframes`
+  0% {
+    box-shadow:-1px 1px 8px -2px rgb(4, 95, 181, 0.8); margin: 10px 5px;
+  }
+  
+  100% {
+    box-shadow: 0px 0px 0px 0px rgb(4, 95, 181, 0.0); margin: 5px 5px;
+  }
+`;
+
 const Wrapper = styled.div`
   margin: 20px 10vw 20px 10vw;
 `;
 
-const Title = styled.p`
+const Title = styled.div`
+  text-align: center;
   font-size: 20px;
+  color: ${style.charcoal};
+  margin: 20px auto;
 `;
 
 const Postbox = styled.div`
   padding: 10px;
-  margin: 5px;
-  border: 1px solid black;
+  margin: 5px 5px;
+  padding-top: 20px;
+  border: 1px solid ${style.black};
   border-radius: ${style.radius};
+  animation: 1s ${fadeIn} ease;
 `;
 
 const Reply = styled.div`

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useParams, useHistory } from "react-router-dom";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import moment from "moment";
 import { AppContext } from "./AppContext";
 import style from "./styleConstants";
@@ -56,25 +56,45 @@ export const Edit = () => {
       .then((res) => res.json())
       .then((res) => {
         console.log(res);
-        window.alert(`post ${postId} has been updated`);
       })
       .then(history.push(`/user/${appUser.email}`));
   };
 
-  console.log(post);
   return (
     <Wrapper>
       {post && (
         <UpdateForm>
-          <p>{post.timestamp}</p>
-          <label htmlFor="title">Title</label>
+          <Title>Update/Delete Post</Title>
+          <Timestamp>Posted on {post.timestamp}</Timestamp>
+          {post.imageURL && <Img src={post.imageURL} />}
+          <Radio>
+            <input
+              onChange={(ev) => handleChange(ev.target.value, "seeking")}
+              type="radio"
+              id="seeking1"
+              name="Seeking"
+              value="seeking"
+            />
+            <LabelRad for="seeking1">Seeking</LabelRad>
+          </Radio>
+          <Radio>
+            <input
+              onChange={(ev) => handleChange(ev.target.value, "seeking")}
+              type="radio"
+              id="seeking2"
+              name="Seeking"
+              value="offering"
+            />
+            <LabelRad for="seeking2">Offering</LabelRad>
+          </Radio>
+          <Label htmlFor="title">Title</Label>
           <Input
             type="text"
             name="Title"
             onChange={(ev) => handleChange(ev.target.value, "title")}
             placeholder={post.title}
           />
-          <label htmlFor="content">Content</label>
+          <Label htmlFor="content">Content</Label>
           <ContentBox
             type="text"
             name="content"
@@ -82,20 +102,23 @@ export const Edit = () => {
             placeholder={post.content}
             onChange={(ev) => handleChange(ev.target.value, "content")}
           />
-          <label htmlFor="content">Location</label>
+          <Label htmlFor="content">Location</Label>
           <Input
             type="text"
             name="location"
+            placeholder={post.location}
             onChange={(ev) => handleChange(ev.target.value, "location")}
           />
-          {post.imageURL && <Img src={post.imageURL} />}
 
-          <label htmlFor="category">Category</label>
+          <Label htmlFor="category">Category</Label>
           <Select
             type="dropdown"
             name="category"
             onChange={(ev) => handleChange(ev.target.value, "category")}
           >
+            <option value="" disabled selected>
+              Choose one
+            </option>
             <option value="sportsandfitness">Sports & Fitness</option>
             <option value="foodanddrink">Food & Drink</option>
             <option value="artandcraft">Art & Craft</option>
@@ -106,29 +129,62 @@ export const Edit = () => {
             <option value="other">Other</option>
           </Select>
           <Button onClick={handleUpdate}>Update Post</Button>
-          <Button onClick={handleDelete}>Delete Post</Button>
+          <DeleteButton onClick={handleDelete}>Delete Post</DeleteButton>
         </UpdateForm>
       )}
     </Wrapper>
   );
 };
 
+const up = keyframes`
+  0% {
+    margin: 10px 10px 10px 10px;
+  }
+
+  100% {
+    margin: 20px 10px 10px 10px;
+  }
+`;
+
 const Wrapper = styled.div`
+  margin: 30px 10vw;
+`;
+
+const Title = styled.div`
   text-align: center;
-  background-color: white;
-  margin: 30px auto;
-  width: 80vw;
-  padding: 20px;
+  margin: 20px;
+  color: ${style.charcoal};
+  font-size: 18px;
+`;
+
+const Timestamp = styled.div`
+  text-align: center;
+  margin: 10px;
+  color: ${style.charcoal};
+  font-size: 16px;
 `;
 
 const UpdateForm = styled.div``;
 
+const Radio = styled.div`
+  margin: 25px;
+  display: inline;
+  color: ${style.charcoal};
+`;
+const LabelRad = styled.label``;
+
 const ContentBox = styled.textarea`
   display: block;
+  border: 1px solid black;
   border-radius: ${style.radius};
   margin: 10px 5px;
-  height: 60px;
+  padding: 8px;
+  font-family: sans-serif;
   width: 95%;
+  background-color: ${style.lightblue};
+  &:focus {
+    background-color: white;
+  }
 `;
 
 const Select = styled.select`
@@ -139,6 +195,17 @@ const Select = styled.select`
   width: 95%;
   font-size: 16px;
   padding-left: 8px;
+  background-color: ${style.lightblue};
+  &:focus {
+    background-color: white;
+  }
+`;
+
+const Label = styled.label`
+  display: block;
+  margin: 20px 10px 10px 10px;
+  color: ${style.charcoal};
+  animation: 0.7s ${up} ease;
 `;
 
 const Input = styled.input`
@@ -147,17 +214,38 @@ const Input = styled.input`
   margin: 10px 5px;
   height: 30px;
   width: 95%;
+  padding: 8px;
+  font-family: sans-serif;
+  border: 1px solid black;
+  background-color: ${style.lightblue};
+  &:focus {
+    background-color: white;
+  }
 `;
 
 const Button = styled.button`
-  height: 30px;
-  padding: 5px 15px;
+  padding: 8px 15px;
+  width: 70vw;
+  text-align: center;
+`;
+
+const DeleteButton = styled.button`
+  background-color: red;
+  border: 2px solid red;
+  padding: 8px 15px;
+  color: white;
+  width: 70vw;
+  text-align: center;
+  margin-bottom: 40px;
 `;
 
 const Img = styled.img`
-  width: 50px;
-  height: 50px;
+  width: 100px;
+  height: 100px;
+  display: block;
   object-fit: cover;
+  margin: 20px auto;
+  border-radius: ${style.radius};
 `;
 
 export default Edit;

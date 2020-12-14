@@ -1,12 +1,13 @@
 import React from "react";
 import style from "./styleConstants";
 import { NavLink, useHistory } from "react-router-dom";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 
 export const SearchPage = () => {
   console.log("search");
   return (
     <Wrapper>
+      <Head>Search by Type:</Head>
       <Cat exact to="/posts/type/seeking">
         Seeking
       </Cat>
@@ -36,23 +37,40 @@ export const SearchPage = () => {
   );
 };
 
+const button = keyframes`
+  0% {
+    background-color:rgb(86, 211, 252, 0.0); margin-top: 6px;
+  }
+
+  100% {
+    background-color: rgb(86, 211, 252, 0.2); margin-top: 10px;
+  }
+`;
+
 const Wrapper = styled.div`
   margin: 20px 10vw;
 `;
 
 const Head = styled.p`
   font-weight: bold;
-
-  margin-bottom: 15px;
+  color: ${style.charcoal};
+  margin: 15px auto;
 `;
 
 const Cat = styled(NavLink)`
   display: block;
-  margin: 10px auto;
-  width: 80%;
-  box-shadow: inset 0px 0px 18px -6px ${style.skyblue};
-  padding: 15px;
-  border-radius: ${style.radius};
+  width: 70%;
+  color: ${style.black};
+  background-color: rgb(86, 211, 252, 0.2);
+  font-weight: bold;
+  border-radius: 17px;
+  /* margin: 17px auto; */
+  margin: auto;
+  margin-top: 10px;
+  animation: 0.7s ${button} ease;
+  padding: 10px 20px;
+  border: 2px solid ${style.black};
+  cursor: pointer;
 `;
 
 export default SearchPage;

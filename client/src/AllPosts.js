@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
+import PostComponent from "./PostComponent";
+import style from "./styleConstants";
 
 export const AllPosts = () => {
   let history = useHistory();
@@ -17,8 +19,8 @@ export const AllPosts = () => {
 
   return (
     <Wrapper>
-      all posted ads
-      {allPosts ? (
+      <Text>All Posts</Text>
+      {allPosts && allPosts.length > 0 ? (
         Object.values(allPosts)
           .sort((a, b) => {
             if (b.editedOn > a.editedOn) {
@@ -28,46 +30,35 @@ export const AllPosts = () => {
             }
           })
           .map((post) => {
-            console.log(post);
             return (
-              <Postbox
-                key={post.postId}
-                onClick={() => history.push(`/posts/${post.postId}`)}
-              >
-                <p>{post.title}</p>
-                <p>location: {post.location}</p>
-                <p>{post.content}</p>
-                {post.imageURL && <Img src={post.imageURL} />}
-                <p>posted by: {post.userId}</p>
-                <p>date: {post.timestamp}</p>
-                {post.timestamp !== post.editedOn ? (
-                  <p>edited on: {post.editedOn}</p>
-                ) : (
-                  <div></div>
-                )}
-              </Postbox>
+              <>
+                <PostComponent
+                  postId={post.postId}
+                  title={post.title}
+                  location={post.location}
+                  content={post.content}
+                  imageSrc={post.imageURL}
+                  userId={post.userId}
+                  timestamp={post.timestamp}
+                  editedOn={post.editedOn}
+                />
+              </>
             );
           })
       ) : (
-        <div>loading</div>
+        <div>No Posts</div>
       )}
+      <Text>End of Posts</Text>
     </Wrapper>
   );
 };
 
 const Wrapper = styled.div``;
 
-const Postbox = styled.div`
-  padding: 10px;
-  border-radius: 10px;
-  border: 2px solid black;
-  cursor: pointer;
-`;
-
-const Img = styled.img`
-  width: 50px;
-  height: 50px;
-  object-fit: cover;
+const Text = styled.p`
+  color: ${style.black};
+  opacity: 0.8;
+  margin: 20px 30px;
 `;
 
 export default AllPosts;

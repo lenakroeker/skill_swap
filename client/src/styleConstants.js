@@ -2,9 +2,13 @@ export const style = {
   // off white:
   white: "rgb(247, 230, 228)",
   //off black
-  black: "rgb(4, 95, 181)",
+  black: "rgb(0, 92, 158)",
   //sky blue
-  skyblue: "rgb(86, 211, 252)",
+  skyblue: "rgb(110, 204, 255)",
+
+  lightblue: "rgb(217, 245, 255)",
+
+  charcoal: "rgb(82, 78, 65)",
 
   radius: "10px",
 

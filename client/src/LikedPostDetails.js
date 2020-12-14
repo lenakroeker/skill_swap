@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import { useHistory } from "react-router-dom";
+import style from "./styleConstants";
 
-export const LikedPost = () => {
+export const PostDetails = () => {
   const history = useHistory();
   const [post, setPost] = useState({ title: null });
   const params = useParams();
@@ -18,25 +19,70 @@ export const LikedPost = () => {
     return;
   }, [postId]);
 
+  console.log(post.image);
   return (
     <Wrapper>
       {post && (
-        <Wrapper>
+        <>
           <Title>{post.title}</Title>
-          <p>{post.timestamp}</p>
+          <Img src={post.imageURL} />
           <p>{post.content}</p>
-          <button onClick={() => history.push(`/posts/${post.postId}/message`)}>
-            reply!
-          </button>
-        </Wrapper>
+          <Timestamp>
+            {post.timestamp} in <Bold>{post.location}</Bold>
+          </Timestamp>
+          <Timestamp>
+            Posted by <Bold>{post.userId}</Bold>
+          </Timestamp>
+          {post.timestamp !== post.editOn && (
+            <Timestamp>Edited on {post.editedOn}</Timestamp>
+          )}
+          <Button onClick={() => history.push(`/posts/${post.postId}/message`)}>
+            Reply
+          </Button>
+        </>
       )}
     </Wrapper>
   );
 };
 
+const fadeIn = keyframes`
+  0% {
+    box-shadow: 0px 0px 0px 0px rgb(4, 95, 181, 0.0);
+  }
+  100% {
+    box-shadow: 2px 2px 8px -2px rgb(4, 95, 181, 0.5);
+  }
+`;
+
+const button = keyframes`
+  0% {
+    background-color:rgb(86, 211, 252, 0.0); margin-top: 20px;
+  }
+
+  70% {
+    background-color: rgb(86, 211, 252, 0.4); margin-top: 10px;
+  }
+
+  100% {
+    background-color: rgb(86, 211, 252, 0.3); margin-top: 10px;
+  }
+`;
+
 const Wrapper = styled.div`
+  color: ${style.charcoal};
+  margin: 0px 10vw 20px 10vw;
   text-align: center;
-  background-color: white;
+  box-shadow: 2px 2px 8px -2px rgb(4, 95, 181, 0.8);
+  animation: 1s ${fadeIn} ease;
+  border-radius: ${style.radius};
+  padding: 20px;
+  margin: 20px 30px;
+`;
+
+const Img = styled.img`
+  width: 60vw;
+  border-radius: 20px;
+  margin: 15px;
 `;
 
 const Title = styled.p`
@@ -44,4 +90,26 @@ const Title = styled.p`
   font-weight: bold;
 `;
 
-export default LikedPost;
+const Timestamp = styled.p`
+  font-size: 12px;
+  color: ${style.black};
+  margin: 15px 0px;
+`;
+
+const Button = styled.button`
+  width: 40%;
+  padding: 8px;
+  color: ${style.black};
+  font-weight: bold;
+  display: inline;
+  border-radius: 17px;
+  margin-top: 10px;
+  animation: 0.7s ${button} ease;
+`;
+
+const Bold = styled.span`
+  font-weight: bold;
+  color: ${style.charcoal};
+`;
+
+export default PostDetails;

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useParams, useHistory } from "react-router-dom";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import { AppContext } from "./AppContext";
 import style from "./styleConstants";
 import { v4 as uuidv4 } from "uuid";
@@ -56,12 +56,22 @@ export const SendMessage = () => {
             rows="5"
             onChange={(ev) => handleChange(ev.target.value, "message")}
           />
-          <button onClick={sendMessage}>Reply!</button>
+          <Button onClick={sendMessage}>Send</Button>
         </Wrapper>
       )}
     </Wrapper>
   );
 };
+
+const button = keyframes`
+  0% {
+    background-color:rgb(86, 211, 252, 0.0); margin-top: 6px;
+  }
+
+  100% {
+    background-color: rgb(86, 211, 252, 0.2); margin-top: 0px;
+  }
+`;
 
 const Wrapper = styled.div`
   text-align: center;
@@ -77,8 +87,20 @@ const ContentBox = styled.textarea`
   border-radius: ${style.radius};
   background-color: white;
   margin: 10px 5px;
+  padding: 10px;
+  font-family: sans-serif;
   width: 80vw;
   margin: 20px auto;
+`;
+
+const Button = styled.button`
+  width: 70%;
+  color: ${style.black};
+  background-color: rgb(86, 211, 252, 0.2);
+  font-weight: bold;
+  border-radius: 17px;
+  margin-top: 0px;
+  animation: 0.7s ${button} ease;
 `;
 
 export default SendMessage;

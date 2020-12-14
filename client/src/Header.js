@@ -1,8 +1,9 @@
 import React, { useContext, useState, useEffect } from "react";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import { NavLink, useHistory } from "react-router-dom";
 import { AppContext } from "./AppContext";
 import style from "./styleConstants";
+import Logo from "./assets/skillswaplogo.png";
 
 export const Header = () => {
   const { appUser, signInWithGoogle, handleSignOut, message } = useContext(
@@ -19,6 +20,7 @@ export const Header = () => {
 
   return (
     <Wrapper>
+      <Img src={Logo} />
       {appUser && appUser.email ? (
         <>
           <Welcome>
@@ -86,7 +88,9 @@ const Wrapper = styled.div`
   height: 80px;
   text-align: center;
 `;
-const Welcome = styled.div``;
+const Welcome = styled.div`
+  font-size: 14px;
+`;
 
 const MenuDrop = styled.div``;
 
@@ -106,6 +110,13 @@ const DropBtn = styled.button`
   }
 `;
 
+const Img = styled.img`
+  width: 40px;
+  position: absolute;
+  top: 10px;
+  left: 10px;
+`;
+
 const DropdownContent = styled.ul`
   margin-top: -5px;
   position: absolute;
@@ -116,6 +127,16 @@ const DropdownContent = styled.ul`
   background: transparent;
   width: 100vw;
   padding: 0 10vw;
+  z-index: 5;
+`;
+
+const drop = keyframes`
+  0% {
+    margin: -1px 0;
+  }
+  100% {
+    margin: 0.5px 0;
+  }
 `;
 
 const DropItem = styled(NavLink)`
@@ -129,6 +150,7 @@ const DropItem = styled(NavLink)`
   color: white;
   padding: 10px 10px;
   margin: 0.5px 0;
+  animation: 0.5s ${drop} ease-in-out;
   &:hover {
     background: ${style.black};
   }
