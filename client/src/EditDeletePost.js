@@ -167,7 +167,7 @@ const Timestamp = styled.div`
 const UpdateForm = styled.div``;
 
 const Radio = styled.div`
-  margin: 25px;
+  margin: 20px;
   display: inline;
   color: ${style.charcoal};
 `;

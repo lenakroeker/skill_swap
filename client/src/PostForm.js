@@ -38,17 +38,6 @@ export const PostForm = () => {
 
   console.log(appUser);
 
-  useEffect(() => {
-    console.log(appUser.displayName);
-    console.log(appUser.email);
-    setFormData({
-      ...formData,
-      userId: appUser.displayName,
-      userEmail: appUser.email,
-      postId: uuidv4(),
-    });
-  }, [appUser]);
-
   console.log(formData);
 
   const handleChange = (value, name) => {
@@ -56,12 +45,20 @@ export const PostForm = () => {
   };
 
   const postAd = () => {
+    const basicData = {
+      ...formData,
+      userId: appUser.displayName,
+      userEmail: appUser.email,
+      imageURL: imageurl,
+      postId: uuidv4(),
+    };
+    console.log(basicData);
     fetch(`/posted`, {
       method: "post",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(formData),
+      body: JSON.stringify(basicData),
     }).then(history.push(`/all`));
   };
 
@@ -102,9 +99,9 @@ export const PostForm = () => {
 
   console.log(imageurl);
 
-  useEffect(() => {
-    setFormData({ ...formData, imageURL: imageurl });
-  }, [imageurl]);
+  // useEffect(() => {
+  //   setFormData({ ...formData, imageURL: imageurl });
+  // }, [imageurl]);
 
   return (
     <Form>
@@ -117,7 +114,7 @@ export const PostForm = () => {
           name="Seeking"
           value="seeking"
         />
-        <LabelRad for="seeking1">Seeking</LabelRad>
+        <LabelRad htmlFor="seeking1">Seeking</LabelRad>
       </Radio>
       <Radio>
         <input
@@ -127,7 +124,7 @@ export const PostForm = () => {
           name="Seeking"
           value="offering"
         />
-        <LabelRad for="seeking2">Offering</LabelRad>
+        <LabelRad htmlFor="seeking2">Offering</LabelRad>
       </Radio>
 
       <Label htmlFor="title">Title</Label>
@@ -202,7 +199,7 @@ const Title = styled.div`
 `;
 
 const Radio = styled.div`
-  margin: 25px;
+  margin: 20px;
   display: inline;
   color: ${style.charcoal};
 `;
