@@ -36,7 +36,7 @@ NPM
 
 7. Signed-in Users recieve messages sent in response to their posts in the 'My Messages' area of 'My Account'. They can then chose to respond by email.
 
-![](/screenshots/screenshotsmessages.gif)
+![](/screenshots/messages.gif)
 
 8.  Signed-in Users can sign out using the dropdown menu, and are redirected to the home page
 
