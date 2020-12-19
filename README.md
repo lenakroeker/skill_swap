@@ -25,6 +25,8 @@ NPM
 
 ![](update.jpg)
 
+
+![screenshot](screenshots/update.jpg?raw=true "Title")
 4. Signed-in Users can view their favorite posts in 'My Favorites' area of 'My Account'
 
 5. Signed-in Users can reply to a post from post details page or post details in favorites
