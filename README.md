@@ -32,7 +32,7 @@ NPM
 
 5. Signed-in Users can reply to a post from post details page or post details in favorites
 
-![](reply.gif)
+![](/screenshots/reply.gif)
 
 7. Signed-in Users recieve messages sent in response to their posts in the 'My Messages' area of 'My Account'. They can then chose to respond by email.
 
