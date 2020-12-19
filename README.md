@@ -23,7 +23,7 @@ NPM
 
 3. Signed-in Users can view/update/delete their posts in the 'My Posts' area of 'My Account'
 
-<img src="screenshots/update.jpg" width="50px">
+<img src="screenshots/update.jpg" width="150px">
 
 
 4. Signed-in Users can view their favorite posts in 'My Favorites' area of 'My Account'
