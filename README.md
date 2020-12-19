@@ -17,17 +17,25 @@ NPM
 
 ![](signin.gif)
 
-2. Signed-in Users can Favorite or reply to posts from post details page
+2. Signed-in Users can create posts including category criteria and upload an image
 
-3. Signed-in Users can create posts including category criteria and upload an image
+![](postad.gif)
 
-4. Signed-in Users can view/update/delete their posts in the 'My Posts' area of 'My Account'
+3. Signed-in Users can view/update/delete their posts in the 'My Posts' area of 'My Account'
 
-5. Signed-in Users can view their favorite posts in 'My Favorites' area of 'My Account'
+![](update.jpg)
 
-6. Signed-in Users can reply to a post from post details page or post details in favorites
+4. Signed-in Users can view their favorite posts in 'My Favorites' area of 'My Account'
+
+5. Signed-in Users can reply to a post from post details page or post details in favorites
+
+![](reply.gif)
 
 7. Signed-in Users recieve messages sent in response to their posts in the 'My Messages' area of 'My Account'. They can then chose to respond by email.
 
+![](messages.gif)
+
 8.  Signed-in Users can sign out using the dropdown menu, and are redirected to the home page
+
+![](signout.gif)
 
