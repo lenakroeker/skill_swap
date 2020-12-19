@@ -21,7 +21,7 @@ NPM
 
 2. Signed-in Users can create posts including category criteria and upload an image
 
-![/screenshots/postad](postad.gif)
+![postad](/screenshots/postad.gif)
 
 3. Signed-in Users can view/update/delete their posts in the 'My Posts' area of 'My Account'
 
@@ -40,5 +40,5 @@ NPM
 
 8.  Signed-in Users can sign out using the dropdown menu, and are redirected to the home page
 
-![](/screenshots/signout.gif)
+
 
