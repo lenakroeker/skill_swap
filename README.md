@@ -15,15 +15,15 @@ NPM
 
 1. Users sign in using their google account and are redirected to the "all posts" page. Users who are not signed in are able to view all posts page and search, as well as view post details pages.
 
-![](signin.gif)
+![signin](signin.gif)
 
 2. Signed-in Users can create posts including category criteria and upload an image
 
-![](postad.gif)
+![postad](postad.gif)
 
 3. Signed-in Users can view/update/delete their posts in the 'My Posts' area of 'My Account'
 
-![](update.jpg)
+![update](update.jpg)
 
 
 ![screenshot](screenshots/update.jpg?raw=true "Title")
