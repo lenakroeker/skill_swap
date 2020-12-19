@@ -17,7 +17,7 @@ NPM
 
 1. Users sign in using their google account and are redirected to the "all posts" page. Users who are not signed in are able to view all posts page and search, as well as view post details pages.
 
-![signin](signin.gif)
+
 
 2. Signed-in Users can create posts including category criteria and upload an image
 
