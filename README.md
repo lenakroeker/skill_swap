@@ -4,6 +4,8 @@ cb_fw_20
 
 An app where users can sign up and post ads for skills they would like to swap with others in their community.
 
+Demo Video: https://youtu.be/nOOSexi5hgU
+
 Technologies Used:
 
 React JS
